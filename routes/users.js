@@ -24,9 +24,9 @@ router.post("/register", (request, response) => {
   const username = request.body.username;
   const email = request.body.email;
 	if(emailEx.test(email) && usernameEx.test(username)) {
-    users.getUsers().then((users) => {
-      let username_exist_test = users.findIndex( x => x.username == username);
-      let email_exist_test = users.findIndex( x => x.email == email);
+    users.getUsers().then((dbUsers) => {
+      let username_exist_test = dbUsers.findIndex( x => x.username == username);
+      let email_exist_test = dbUsers.findIndex( x => x.email == email);
       if(username_exist_test == -1 && email_exist_test == -1) {
         bcrypt.hash(request.body.password, saltRounds, function(err, hash) {
           if(!err) {
